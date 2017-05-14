@@ -1,0 +1,24 @@
+---
+
+redhat_packages:
+  - openstack-keystone
+  - mariadb-server
+  - python-swiftclient
+
+ubuntu_packages:
+  - keystone
+  - python-keyring
+  - mysql-server
+  - python-mysqldb
+
+keystone_admin_token : 2f50faa532908c31f1c3
+keystone_mysql_password: keystone
+keystone_region: california
+keystone_admin_user: admin
+keystone_admin_user_password: admin
+keystone_test_user_password: test
+keystone_test_user: test
+keystone_admin_role: admin
+keystone_generic_service_password: keystone
+keystone_admin_tenant: admin
+

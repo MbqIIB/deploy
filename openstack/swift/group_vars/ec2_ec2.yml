@@ -1,0 +1,231 @@
+ansible_all_ipv4_addresses:
+- 172.31.19.10
+ansible_all_ipv6_addresses: []
+ansible_architecture: x86_64
+ansible_bios_date: ''
+ansible_bios_version: ''
+ansible_cmdline:
+    console: hvc0
+    consoleblank: '0'
+    ro: true
+    root: LABEL=ROOT
+ansible_date_time:
+    date: '2015-07-29'
+    day: '29'
+    epoch: '1438157828'
+    hour: 08
+    iso8601: '2015-07-29T08:17:08Z'
+    iso8601_micro: '2015-07-29T08:17:08.700416Z'
+    minute: '17'
+    month: '07'
+    second: 08
+    time: 08:17:08
+    tz: UTC
+    tz_offset: '+0000'
+    weekday: Среда
+    year: '2015'
+ansible_default_ipv4:
+    address: 172.31.19.10
+    alias: eth0
+    gateway: 172.31.16.1
+    interface: eth0
+    macaddress: 06:e2:c4:11:8f:7f
+    mtu: 1500
+    netmask: 255.255.240.0
+    network: 172.31.16.0
+    type: ether
+ansible_default_ipv6: {}
+ansible_devices:
+    xvda1:
+        holders: []
+        host: ''
+        model: null
+        partitions: {}
+        removable: '0'
+        rotational: '0'
+        scheduler_mode: deadline
+        sectors: '20971520'
+        sectorsize: '512'
+        size: 10.00 GB
+        support_discard: '0'
+        vendor: null
+ansible_distribution: CentOS
+ansible_distribution_major_version: '7'
+ansible_distribution_release: Core
+ansible_distribution_version: 7.0.1406
+ansible_domain: us-west-2.compute.internal
+ansible_env:
+    HOME: /root
+    LANG: C
+    LC_ADDRESS: ru_RU.UTF-8
+    LC_CTYPE: C
+    LC_IDENTIFICATION: ru_RU.UTF-8
+    LC_MEASUREMENT: ru_RU.UTF-8
+    LC_MONETARY: ru_RU.UTF-8
+    LC_NAME: ru_RU.UTF-8
+    LC_NUMERIC: ru_RU.UTF-8
+    LC_PAPER: ru_RU.UTF-8
+    LC_TELEPHONE: ru_RU.UTF-8
+    LC_TIME: ru_RU.UTF-8
+    LESSOPEN: '||/usr/bin/lesspipe.sh %s'
+    LOGNAME: root
+    MAIL: /var/mail/root
+    PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+    PKG_CONFIG_PATH: /usr/lib/pkgconfig:/usr/local/lib/pkgconfig
+    PWD: /root
+    SHELL: /bin/bash
+    SHLVL: '2'
+    SSH_CLIENT: 195.160.233.253 39864 22
+    SSH_CONNECTION: 195.160.233.253 39864 172.31.19.10 22
+    SSH_TTY: /dev/pts/0
+    TERM: xterm-256color
+    USER: root
+    XDG_RUNTIME_DIR: /run/user/0
+    XDG_SESSION_ID: '2'
+    _: /usr/bin/python
+ansible_eth0:
+    active: true
+    device: eth0
+    ipv4:
+        address: 172.31.19.10
+        netmask: 255.255.240.0
+        network: 172.31.16.0
+    macaddress: 06:e2:c4:11:8f:7f
+    module: xen_netfront
+    mtu: 1500
+    promisc: false
+    type: ether
+ansible_fips: false
+ansible_form_factor: ''
+ansible_fqdn: ip-172-31-19-10.us-west-2.compute.internal
+ansible_hostname: ip-172-31-19-10
+ansible_interfaces:
+- lo
+- eth0
+ansible_kernel: 3.10.0-123.20.1.el7.centos.plus.x86_64
+ansible_lo:
+    active: true
+    device: lo
+    ipv4:
+        address: 127.0.0.1
+        netmask: 255.0.0.0
+        network: 127.0.0.0
+    mtu: 65536
+    promisc: false
+    type: loopback
+ansible_lsb:
+    codename: Core
+    description: CentOS Linux release 7.0.1406 (Core)
+    id: CentOS
+    major_release: '7'
+    release: 7.0.1406
+ansible_machine: x86_64
+ansible_machine_id: fb0a4f0abc49ddf24587318db988fb71
+ansible_memfree_mb: 307
+ansible_memory_mb:
+    nocache:
+        free: 498
+        used: 90
+    real:
+        free: 307
+        total: 588
+        used: 281
+    swap:
+        cached: 0
+        free: 0
+        total: 0
+        used: 0
+ansible_memtotal_mb: 588
+ansible_mounts:
+-   device: /dev/xvda1
+    fstype: ext3
+    mount: /
+    options: rw,relatime,data=ordered
+    size_available: 8661946368
+    size_total: 10434699264
+    uuid: 1846b48c-22fc-4616-a08e-830a62ac1847
+ansible_nodename: ip-172-31-19-10
+ansible_os_family: RedHat
+ansible_pkg_mgr: yum
+ansible_processor:
+- GenuineIntel
+- Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz
+ansible_processor_cores: 1
+ansible_processor_count: 1
+ansible_processor_threads_per_core: 1
+ansible_processor_vcpus: 1
+ansible_product_name: ''
+ansible_product_serial: ''
+ansible_product_uuid: ''
+ansible_product_version: ''
+ansible_python_version: 2.7.5
+ansible_selinux:
+    status: disabled
+ansible_ssh_host_key_ecdsa_public: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGeFPZq2F6voKM2rRvkAwIIjYARvg0aW42h5gc2JJD5qeSzJ+4SplNdKFj0zo4VeO3CT/GaBZTXUwJ2XB/ZmGeE=
+ansible_ssh_host_key_rsa_public: AAAAB3NzaC1yc2EAAAADAQABAAABAQCnt9o8hadk+jJf2ZlfufGM4A57BnbWNGwjM2EZUpiGpPEPX5325g3fAqOyJAY6to0bQG5fSesUHJSjcKVm/PJfnV7a0iOMFX531cYnCf6D3ghRv0kCWgsnLpec8JxqtqSRsj5MRYxrQJ1owB2eK+4SMmkkbnUiCROOqKWGIXOChPU1S/sOn0VLsIEXJS/F4kzQKXWYMFwZfTV2z+oYWb5JaZQq3H6b5XUX0PIiLK24c+fuxG/Ycy4v8hlRNT3G2zvoxgqk07u2O1dXTXvUjCuP+2nVsteV8Fv++bOY5jmNCe/Z7FY1IZRhrnlThMTdf6TMeZIuGIs2iosGx2TJB4xz
+ansible_swapfree_mb: 0
+ansible_swaptotal_mb: 0
+ansible_system: Linux
+ansible_system_vendor: ''
+ansible_user_dir: /root
+ansible_user_gecos: root
+ansible_user_gid: 0
+ansible_user_id: root
+ansible_user_shell: /bin/bash
+ansible_user_uid: 0
+ansible_userspace_architecture: x86_64
+ansible_userspace_bits: '64'
+ansible_virtualization_role: guest
+ansible_virtualization_type: xen
+ec2__in_monitoring_element: false
+ec2_ami_launch_index: '0'
+ec2_architecture: x86_64
+ec2_client_token: ''
+ec2_dns_name: ec2-52-10-171-186.us-west-2.compute.amazonaws.com
+ec2_ebs_optimized: false
+ec2_eventsSet: ''
+ec2_group_name: ''
+ec2_hypervisor: xen
+ec2_id: i-8c419945
+ec2_image_id: ami-6d6b475d
+ec2_instance_profile: ''
+ec2_instance_type: t1.micro
+ec2_ip_address: 52.10.171.186
+ec2_item: ''
+ec2_kernel: aki-fc8f11cc
+ec2_key_name: arkhangl
+ec2_launch_time: '2015-07-29T08:08:25.000Z'
+ec2_monitored: false
+ec2_monitoring: ''
+ec2_monitoring_state: disabled
+ec2_persistent: false
+ec2_placement: us-west-2b
+ec2_platform: ''
+ec2_previous_state: ''
+ec2_previous_state_code: 0
+ec2_private_dns_name: ip-172-31-19-10.us-west-2.compute.internal
+ec2_private_ip_address: 172.31.19.10
+ec2_public_dns_name: ec2-52-10-171-186.us-west-2.compute.amazonaws.com
+ec2_ramdisk: ''
+ec2_reason: ''
+ec2_region: us-west-2
+ec2_requester_id: ''
+ec2_root_device_name: /dev/sda1
+ec2_root_device_type: ebs
+ec2_security_group_ids: sg-e3964387
+ec2_security_group_names: zabbix
+ec2_sourceDestCheck: 'true'
+ec2_spot_instance_request_id: ''
+ec2_state: running
+ec2_state_code: 16
+ec2_state_reason: ''
+ec2_subnet_id: subnet-76b84101
+ec2_tag_Name: zabbix
+ec2_virtualization_type: paravirtual
+ec2_vpc_id: vpc-bab17ddf
+group_names:
+- ec2
+- tag_Name_zabbix
+inventory_hostname: 52.10.171.186
+inventory_hostname_short: '52'
+module_setup: true

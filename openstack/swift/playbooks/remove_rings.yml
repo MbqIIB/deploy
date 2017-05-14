@@ -1,0 +1,37 @@
+---
+
+- hosts: storage
+  tasks:
+  - include_vars: /home/mhrom/PycharmProjects/ansible/roles/storage/vars/main.yml
+  - name: stop all swift-storage node services
+    command: swift-init all stop
+    ignore_errors: True
+  - name: cleanup image mounts
+    shell: umount /srv/node/{{ disk_prefix }}{{ item }}; losetup -d /dev/loop{{ item }}; rm -rf /var/tmp/{{ disk_prefix }}{{ item }}.img
+    with_sequence: count= {{ disks }}
+
+- hosts: tag_Name_proxy
+  tasks:
+  - name: stop swift-proxy on proxy nodes
+    service: name=openstack-swift-proxy state=stopped
+    when: ansible_os_family == 'RedHat'
+  - name: stop swift-proxy on proxy nodes
+    service: name=swift-proxy state=stopped
+    when: ansible_os_family == 'Debian'
+  - name: remove builder files
+    command: rm -rf /etc/swift/{{item}}.builder
+    with_items:
+    - account
+    - container
+    - object
+
+- hosts:
+  - tag_Name_storage
+  - tag_Name_proxy
+  tasks:
+  - name: remove ring files
+    command: rm -rf /etc/swift/{{item}}.ring.gz
+    with_items:
+    - account
+    - container
+    - object

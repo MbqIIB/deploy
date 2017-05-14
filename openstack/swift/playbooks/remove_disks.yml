@@ -1,0 +1,8 @@
+---
+
+- hosts: tag_Name_storage
+  tasks:
+   - include_vars: ../roles/swift-storage/vars/main.yml
+   - name: cleanup image mounts
+     shell: umount /srv/node/{{ disk_prefix }}{{ item }}; losetup -d /dev/loop{{ item }}; rm -rf /var/tmp/{{ disk_prefix }}{{ item }}.img; rm -rf /srv/node/{{ disk_prefix}}{{ item }};
+     with_sequence: count={{ disks }}

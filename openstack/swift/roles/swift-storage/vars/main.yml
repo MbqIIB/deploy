@@ -1,0 +1,21 @@
+---
+
+ubuntu_packages:
+    - swift-account 
+    - swift-container 
+    - swift-object 
+    - xfsprogs 
+    - parted
+
+redhat_packages:
+    - openstack-swift-account 
+    - openstack-swift-container 
+    - openstack-swift-object 
+    - xfsprogs 
+    - parted
+
+disk_prefix: sd
+disks: 2
+region: 1
+zone: 1
+loop_disk_size: 4

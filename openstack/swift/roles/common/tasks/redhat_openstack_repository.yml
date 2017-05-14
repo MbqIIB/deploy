@@ -1,0 +1,13 @@
+---
+
+- name: ensure yum-plugin-priorities is installed
+  yum: name=yum-plugin-priorities state=installed
+
+- name: install RDO openstack repository
+  command: yum -y install centos-release-openstack
+  notify:
+      - yum makecache
+- name: install EPEL repository
+  command: yum -y install epel-release
+  notify:
+    - yum makecache

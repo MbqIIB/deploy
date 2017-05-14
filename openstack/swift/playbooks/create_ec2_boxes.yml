@@ -1,0 +1,90 @@
+---
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Creating boxes for swift-proxy
+      ec2:
+         key_name :  "arkhangl"
+         instance_type : "t1.micro"
+         group: "swift_proxy"
+         image: "ami-6d6b475d"
+         region: "us-west-2"
+         wait: "true"
+         exact_count: 1
+         count_tag:
+                  Name: proxy
+         instance_tags:
+                      Name: proxy
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Creating boxes for swift-storage
+      ec2:
+         key_name :  "arkhangl"
+         instance_type : "t1.micro"
+         group: "swift_storage"
+         image: "ami-6d6b475d"
+         region: "us-west-2"
+         wait: "true"
+         exact_count: 3
+         count_tag:
+                  Name: storage
+         instance_tags:
+                      Name: storage
+    
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Creating boxes for swift-keystone
+      ec2:
+         key_name :  "arkhangl"
+         instance_type : "t1.micro"
+         group: "swift_keystone"
+         image: "ami-6d6b475d"
+         region: "us-west-2"
+         wait: "true"
+         exact_count: 1
+         count_tag:
+                  Name: keystone
+         instance_tags:
+                      Name: keystone
+
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Creating boxes for zabbix monitoring server
+      ec2:
+         key_name :  "arkhangl"
+         instance_type : "t1.micro"
+         group: "zabbix"
+         image: "ami-6d6b475d"
+         region: "us-west-2"
+         wait: "true"
+         exact_count: 1
+         count_tag:
+                  Name: zabbix
+         instance_tags:
+                      Name: zabbix
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Creating boxes for logstage server
+      ec2:
+         key_name :  "arkhangl"
+         instance_type : "t1.micro"
+         group: "logstage"
+         image: "ami-6d6b475d"
+         region: "us-west-2"
+         wait: "true"
+         exact_count: 1
+         count_tag:
+                  Name: logstage
+         instance_tags:
+                      Name: logstage
+
+- hosts: localhost
+  include: dump_all_vars.yml

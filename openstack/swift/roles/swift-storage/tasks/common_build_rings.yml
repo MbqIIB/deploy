@@ -1,0 +1,45 @@
+---
+
+- name: Get suffix of file with variables by tag
+  local_action: shell ls group_vars | grep tag_Name_proxy
+  register: group_proxy
+
+- name: Modify variables in the file tag_Name_proxy
+  local_action: shell sed -i -e 's/\(^[ansible_|ec2_].*\:\)/proxy_\1/' group_vars/{{ item }}
+  with_items:
+    - "{{ group_proxy.stdout_lines }}"
+- name: Include variables from swift-porxy host
+  include_vars: group_vars/{{ item }}
+  with_items:
+    - "{{ group_proxy.stdout_lines }}"
+
+- name: check if account.ring.gz already exists
+  stat:
+    path: /etc/swift/account.ring.gz
+  register: rings_exist
+  tags:
+    - build_rings
+
+- name: build account ring
+  command: swift-ring-builder account.builder add r{{ region }}z{{ zone }}-{{ ansible_eth0.ipv4.address }}:6002R{{ ansible_eth0.ipv4.address }}:6012/{{ disk_prefix }}{{ item }} 100
+           chdir=/etc/swift
+  delegate_to:  "{{ proxy_inventory_hostname }}"
+  with_sequence: count={{ disks }}
+  tags:
+    - build_rings
+
+- name: build container ring
+  command: swift-ring-builder container.builder add r{{ region }}z{{ zone }}-{{ ansible_eth0.ipv4.address }}:6001R{{ ansible_eth0.ipv4.address }}:6011/{{ disk_prefix }}{{ item }} 100
+           chdir=/etc/swift
+  delegate_to: "{{ proxy_inventory_hostname }}"
+  with_sequence: count={{ disks }}
+  tags:
+    - build_rings
+
+- name: build object ring
+  command: swift-ring-builder object.builder add r{{ region }}z{{ zone }}-{{ ansible_eth0.ipv4.address }}:6000R{{ ansible_eth0.ipv4.address }}:6010/{{ disk_prefix }}{{ item }} 100
+           chdir=/etc/swift
+  delegate_to: "{{ proxy_inventory_hostname }}"
+  with_sequence: count={{ disks }}
+  tags:
+    - build_rings

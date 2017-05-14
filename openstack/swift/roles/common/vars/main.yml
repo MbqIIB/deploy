@@ -1,0 +1,8 @@
+---
+
+ubuntu_packages:
+  - ubuntu-cloud-keyring
+  - python-pycurl
+  
+timezone_area: Europe
+timezone_city: Kiev

@@ -1,0 +1,48 @@
+ansible_facts:
+ansible_ec2_ami_id: ami-6d6b475d
+ansible_ec2_ami_launch_index: '0'
+ansible_ec2_ami_manifest_path: (unknown)
+ansible_ec2_block_device_mapping_ami: /dev/sda1
+ansible_ec2_block_device_mapping_ephemeral0: sdb
+ansible_ec2_block_device_mapping_root: /dev/sda1
+ansible_ec2_hostname: ip-172-31-23-70.us-west-2.compute.internal
+ansible_ec2_instance_action: none
+ansible_ec2_instance_id: i-e029f529
+ansible_ec2_instance_type: t1.micro
+ansible_ec2_kernel_id: aki-fc8f11cc
+ansible_ec2_local_hostname: ip-172-31-23-70.us-west-2.compute.internal
+ansible_ec2_local_ipv4: 172.31.23.70
+ansible_ec2_mac: 06:60:30:29:14:8f
+ansible_ec2_metrics_vhostmd: <?xml version="1.0" encoding="UTF-8"?>
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_device_number: '0'
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_interface_id: eni-215fc568
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_ipv4_associations_52.11.137.85: 172.31.23.70
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_local_hostname: ip-172-31-23-70.us-west-2.compute.internal
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_local_ipv4s: 172.31.23.70
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_mac: 06:60:30:29:14:8f
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_owner_id: '243208553309'
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_public_hostname: ec2-52-11-137-85.us-west-2.compute.amazonaws.com
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_public_ipv4s: 52.11.137.85
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_security_group_ids: sg-87ab69e3
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_security_groups: swift_proxy
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_subnet_id: subnet-76b84101
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_subnet_ipv4_cidr_block: 172.31.16.0/20
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_vpc_id: vpc-bab17ddf
+ansible_ec2_network_interfaces_macs_06_60_30_29_14_8f_vpc_ipv4_cidr_block: 172.31.0.0/16
+ansible_ec2_placement_availability_zone: us-west-2b
+ansible_ec2_placement_region: us-west-2
+ansible_ec2_profile: default-paravirtual
+ansible_ec2_public_hostname: ec2-52-11-137-85.us-west-2.compute.amazonaws.com
+ansible_ec2_public_ipv4: 52.11.137.85
+ansible_ec2_public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxswwj59JM0Gln0liZiB0RjBkvTg644bS5kvQPEG0qZm9H++b4Ye10buQ6r+AOljrtFz6Ub5e4225LUVEcNSO+oalxZGSXoJTN7ZfWG+H2YpEyAHn3ZVb0BMo/4Dlr7e9dnCanLcJMqT2Klu9E//xM+wM3v+HGSlaJTmnk7qA2Zlje0DREXFsxIM1rdiR5ng1FoZ2MtJCXJWBeYUUBa50tVX9GuJHo1CQgoC1vNQSzJECueHwSy9VMj7bQIJgjAEazG5I3z+OdFwDFmVYZu0N79KyVdS3ZgYCdnNOjbHLlyJI7aCEwxJsNLqRK+58NF18Dvoofu4ma2z+Yma77MWpT
+arkhangl
+
+'
+ansible_ec2_reservation_id: r-c77cb731
+ansible_ec2_security_groups: swift_proxy
+ansible_ec2_services_domain: amazonaws.com
+ansible_ec2_user_data: null
+changed: false
+invocation:
+module_args: ''
+module_name: ec2_facts

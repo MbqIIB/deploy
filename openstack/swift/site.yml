@@ -1,0 +1,49 @@
+---
+
+- hosts: localhost
+  include: playbooks/create_ec2_boxes.yml
+
+- hosts:
+  - all
+  roles:
+  - common
+  - zabbix-repository
+
+- hosts:
+  - tag_Name_zabbix
+  roles:
+  - zabbix-server
+
+- hosts:
+  - all
+  roles:
+  - zabbix-agent
+
+- hosts: 
+  - tag_Name_proxy
+  roles:
+  - swift-proxy
+
+
+- hosts:
+  - tag_Name_storage
+  roles:
+  - swift-storage
+
+- hosts:
+  - tag_Name_keystone
+  roles:
+  - swift-authentication
+
+- hosts: 
+  - tag_Name_proxy
+  tasks:
+  - include: start_proxy.yml
+  - include_vars: roles/swift-proxy/vars/main.yml
+
+- hosts:
+  - tag_Name_storage
+  tasks:
+  - include: start_storage.yml
+  - include_vars: roles/swift-storage/vars/main.yml
+

@@ -1,0 +1,24 @@
+---
+
+ubuntu_packages:
+    - swift-proxy 
+    - swift-object
+    - memcached 
+    - python-keystoneclient 
+    - python-swiftclient 
+    - swift-plugin-s3
+    - python-netifaces 
+    - python-xattr 
+    - python-memcache
+
+redhat_packages:
+   - rsync
+   - openstack-swift-proxy
+   - memcached
+   - python-swiftclient
+
+part_power: 7
+replicas: 1
+overload: 0.1
+random_seed: 1501
+min_part_hours: 1 

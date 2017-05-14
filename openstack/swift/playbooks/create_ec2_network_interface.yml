@@ -1,0 +1,14 @@
+---
+
+- name: add second interface to proxy instances
+  hosts: tag_Name_proxy
+  tasks:
+    - action: ec2_eni_facts
+    - name: 'add interface to instance by id'
+      local_action:
+        module: ec2_eni
+        delete_on_termination: true
+        subnet_id: 'subnet-76b84101'
+        region: 'us-west-2'
+        instance_id: "{{ ansible_ec2_instance_id }}"
+        state : present

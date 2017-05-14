@@ -1,0 +1,10 @@
+---
+
+- name: ensure ntp is installed
+  yum: name=ntp state=installed
+
+- name: setup timezone link
+  shell: "timedatectl set-timezone {{ timezone_area }}/{{ timezone_city }}"
+
+- name: ensure ntpd is running
+  service: name=ntpd state=running

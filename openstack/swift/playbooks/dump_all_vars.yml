@@ -1,0 +1,16 @@
+---
+
+- name: Create variables dump file
+  hosts: all
+  tasks:
+  - name: Prepare the template with variables on remote hosts
+    template:
+      src: templates/dump_variables.j2
+      dest: /tmp/ansible_variables.yml
+  - name: Download template to group_vars folder
+    fetch:
+      src: /tmp/ansible_variables.yml
+      dest: "/home/mhrom/PycharmProjects/ansible/group_vars/{{ group_names[1] }}_{{ inventory_hostname }}.yml"
+      flat: yes
+      validate_checksum: no
+

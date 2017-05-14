@@ -1,0 +1,47 @@
+---
+
+- name: terminate proxy instances
+  hosts: tag_Name_proxy
+  tasks:
+    - action: ec2_facts
+    - name: delete by instance_id
+      local_action:
+        module: ec2
+        region: 'us-west-2'
+        state: 'absent'
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+
+- name: terminate storage instances
+  hosts: tag_Name_storage
+  tasks:
+    - action: ec2_facts
+    - name: delete by instance_id
+      local_action:
+        module: ec2
+        region: 'us-west-2'
+        state: 'absent'
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+
+
+- name: terminate keystone instances
+  hosts: tag_Name_keystone
+  tasks:
+    - action: ec2_facts
+    - name: delete by instance_id
+      local_action:
+        module: ec2
+        region: 'us-west-2'
+        state: 'absent'
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+
+- name: terminate zabbix instances
+  hosts: tag_Name_zabbix
+  tasks:
+    - action: ec2_facts
+    - name: delete by instance_id
+      local_action:
+        module: ec2
+        region: 'us-west-2'
+        state: 'absent'
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+

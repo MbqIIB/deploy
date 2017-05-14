@@ -1,0 +1,142 @@
+---
+
+- name: make sure /srv/node exists
+  file:
+    path: /srv/node
+    state: directory
+
+- name: make sure /var/swift/recon exists
+  file:
+    path: /var/swift/recon
+    state: directory
+    owner: swift
+    group: swift
+    mode: 0750
+
+#check disks
+
+- name: check if losetup loop is already up
+  shell: cat /proc/mounts
+  register: result_mount
+  changed_when: "not 'loop' in result_mount.stdout_lines"
+  tags:
+   - check_status
+
+- name: check if dirs were created
+  always_run: True
+  stat:
+    path: /srv/node/{{ disk_prefix }}{{ item }}
+  with_sequence: count={{ disks }}
+  register: result_dirs
+  changed_when: "result_dirs.stat.exists == False"
+  tags:
+   - check_status
+
+- name: check if file for loop device exists
+  stat:
+    path: "/var/tmp/{{ disk_prefix }}{{ item }}.img"
+  with_sequence: count={{ disks }}
+  register: result_loop
+  changed_when: "result_loop.stat.exists == False"
+  tags:
+   - check_status
+
+- name: create sparse images
+  command: truncate --size {{ loop_disk_size }}G /var/tmp/{{ disk_prefix }}{{ item }}.img
+  with_sequence: count={{ disks }}
+  when: "result_loop.changed"
+  tags:
+   - create_loop_devices
+
+- name: setup loop devices
+  command: losetup /dev/loop{{ item }} /var/tmp/{{ disk_prefix }}{{ item }}.img
+  with_sequence: count={{ disks }}
+  when: "result_loop.changed"
+  tags:
+   - create_loop_devices
+
+- name: create file system on loop devices
+  shell: mkfs.xfs -i size=1024 /dev/loop{{ item }}; mkdir /srv/node/{{ disk_prefix }}{{ item }};
+  with_sequence: count={{ disks }}
+  when: "result_loop.changed"
+  tags:
+   - create_loop_devices
+
+- name: make /srv/node disk device directories
+  file:  state=directory path=/srv/node/{{ disk_prefix }}{{ item }} owner=swift group=swift mode=0770
+  with_sequence: count={{ disks }}
+  when: "result_dirs.changed"
+  tags:
+   - create_loop_devices
+
+- name: mount swift disks
+  mount:
+    name: "/srv/node/{{ disk_prefix }}{{ item }}"
+    state: mounted
+    src: "/dev/loop{{ item }}"
+    opts: "noatime,nodiratime,nobarrier"
+    fstype: xfs
+  with_sequence: count={{ disks }}
+  when: not 'loop' in result_mount.stdout_lines
+  tags:
+    - create_loop_devices
+
+- name: set permissions on /srv/node/* after being mounted
+  file:
+    state: directory
+    path: "/srv/node/{{ disk_prefix }}{{ item }}"
+    owner: swift
+    group: swift
+    mode: 0770
+  with_sequence: count={{ disks }}
+  tags:
+    - create_loop_devices
+
+- name: copy over rsyncd.conf to swift storage
+  template:
+    src: rsyncd.conf.j2
+    dest: /etc/rsyncd.conf
+
+- name: make sure rsync is running
+  service:
+    name: rsync
+    state: started
+
+# Configure swift storage processes
+
+- name: ensure *-server directories exist in /etc/swift
+  file:
+    path: /etc/swift/{{ item }}-server
+    state: directory
+    owner: swift
+    group: swift
+    mode: 0755
+  with_items:
+    - account
+    - container
+    - object
+
+- name: copy over *-server.conf files
+  template:
+    src: "{{ item }}-server.conf.j2"
+    dest: /etc/swift/{{ item }}-server/{{ item }}-server.conf
+    owner: swift
+    group: swift
+    mode: 0644
+  with_items:
+    - account
+    - container
+    - object
+
+- name: copy over *-replication.conf files
+  template:
+    src: "{{ item }}-replication.conf.j2"
+    dest: /etc/swift/{{ item }}-server/{{ item }}-replication.conf
+    owner: swift
+    group: swift
+    mode: 0644
+  with_items:
+    - account
+    - container
+    - object
+

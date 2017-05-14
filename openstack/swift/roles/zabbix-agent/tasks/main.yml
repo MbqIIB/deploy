@@ -1,0 +1,90 @@
+---
+# tasks file for wdijkerman.zabbix
+
+- name: "Install the correct repository"
+  include: "RedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: "Install the correct repository"
+  include: "Debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: "Install the correct repository"
+  include: "Suse.yml"
+  when: ansible_os_family == "Suse"
+
+- name: Get suffix of file with variables by tag
+  local_action: shell ls group_vars | grep tag_Name_zabbix
+  register: group_zabbix
+
+- name: Modify variables in the file tag_Name_zabbix
+  local_action: shell sed -i -e 's/\(^[ansible_|ec2_].*\:\)/zabbix_\1/' group_vars/{{ item }}
+  with_items:
+    - "{{ group_zabbix.stdout_lines }}"
+
+- name: Include variables from zabbix host
+  include_vars: group_vars/{{ item }}
+  with_items:
+    - "{{ group_zabbix.stdout_lines }}"
+
+- name: "Configure zabbix-agent"
+  template: src=zabbix_agentd.conf.j2 
+            dest=/etc/zabbix/zabbix_agentd.conf 
+            owner=zabbix 
+            group=zabbix
+            mode=0755 
+  notify: "{{ zabbix_agent }} restarted"
+  sudo: yes
+
+- name: "Create include dir zabbix-agent"
+  file: path={{ agent_include }} 
+        owner=zabbix 
+        group=zabbix 
+        state=directory
+  sudo: yes
+
+- name: The configuration of zabbix server need to be checked. In order to do that you need to open the zabbix admin page in browser.
+  wait_for: host={{ zabbix_ec2_private_dns_name }} port=80 delay=10
+
+- name: "Create hostgroups"
+  local_action:
+    module: zabbix_group
+    server_url: "http://{{ zabbix_ec2_public_dns_name }}"
+    login_user: "{{ zabbix_api_user }}"
+    login_password: "{{ zabbix_api_pass }}"
+    host_group: "{{ zabbix_host_groups }}"
+    state: "{{ zabbix_create_hostgroup }}"
+  when: zabbix_api_use == True
+
+- name: "Create a new host or update an existing host's info"
+  local_action:
+    module: zabbix_host
+    server_url: "http://{{ zabbix_ec2_public_dns_name }}"
+    login_user: "{{ zabbix_api_user }}"
+    login_password: "{{ zabbix_api_pass }}"
+    host_name: "{{ ansible_fqdn }}"
+    host_groups: "{{ zabbix_host_groups }}"
+    link_templates: "{{  zabbix_link_templates }}"
+    status: "{{ zabbix_host_status }}"
+    state: "{{ zabbix_create_host }}"
+    interfaces:
+      - type: 1
+        main: 1
+        useip: "{{ zabbix_useuip }}"
+        ip: "{{ hostvars[inventory_hostname]['ansible_'+ agent_listeninterface]['ipv4'].address }}"
+        dns: "{{ ansible_fqdn }}"
+        port: "{{ agent_listenport }}"
+  when: zabbix_api_use == True
+
+- name: "Updating host configuration with macros"
+  local_action:
+    module: zabbix_hostmacro
+    server_url: "http://{{ zabbix_ec2_public_dns_name }}"
+    login_user: "{{ zabbix_api_user }}"
+    login_password: "{{ zabbix_api_pass }}"
+    host_name: "{{ ansible_fqdn }}"
+    macro_name: "{{ item.macro_key }}"
+    macro_value: "{{ item.macro_value }}"
+  with_items: zabbix_macros
+  when: zabbix_api_use == True and zabbix_macros is defined and item.macro_key is defined
+

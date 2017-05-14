@@ -1,0 +1,7 @@
+---
+
+disk_prefix: sd
+disks: 3
+region: 1
+zone: 1
+loop_disk_size: 1

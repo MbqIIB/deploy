@@ -1,0 +1,46 @@
+---
+
+- name: put the *.ring.gz files on all storage servers
+  copy:
+    src: "fetch/{{ item }}.ring.gz"
+    dest: "/etc/swift/{{item}}.ring.gz"
+    owner: "swift"
+    group: "swift"
+    mode: 0640
+  register: new_rings
+  with_items:
+    - account
+    - object
+    - container
+
+- name: make sure default configuration files are *not* there
+  file:
+    state: absent
+    path: "/etc/swift/{{ item }}-server.conf"
+  with_items:
+    - account
+    - object
+    - container
+
+- name: stop swift-storage node services
+  command: swift-init {{ item }} stop
+#  when: new_rings.changed
+  ignore_errors: True
+  with_items:
+    - account
+    - object
+    - container
+
+- name: start swift-storage node services
+  command: swift-init {{ item }} start
+#  when: new_rings.changed
+  with_items:
+    - account
+    - object
+    - container
+
+- name: restart syslog
+  service:
+    name: rsyslog
+    state: restarted
+  when: new_rings.changed

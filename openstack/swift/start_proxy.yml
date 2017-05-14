@@ -1,0 +1,35 @@
+---
+
+- name: rebalance rings
+  command: swift-ring-builder {{ item }}.builder rebalance
+  args:
+    creates: /etc/swift/{{ item }}.ring.gz
+    chdir: /etc/swift
+  register: rebalance
+  with_items:
+    - account
+    - object
+    - container
+
+- name: grab resulting *.ring.gz files and put them on all proxy and storage nodes
+  fetch:
+    dest: "fetch/{{ item }}.ring.gz"
+    flat: yes
+    src: "/etc/swift/{{ item }}.ring.gz"
+  when: rebalance.changed
+  with_items:
+    - account
+    - object
+    - container
+
+- name: start swift-proxy on proxy nodes
+  service:
+    name: swift-proxy
+    state: running
+  when: ansible_os_family == 'Debian'
+
+- name: start swift-proxy on proxy nodes
+  service:
+    name: openstack-swift-proxy
+    state: running
+  when: ansible_os_family == 'RedHat'

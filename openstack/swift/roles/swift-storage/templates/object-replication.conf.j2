@@ -1,0 +1,27 @@
+[DEFAULT]
+devices = /srv/node
+bind_ip = {{ ansible_eth0.ipv4.address }}
+bind_port = 6010
+workers = 2
+
+[pipeline:main]
+pipeline = recon object-server
+
+[app:object-server]
+use = egg:swift#object
+replication_server = True
+
+[filter:recon]
+use = egg:swift#recon
+recon_cache_path = /var/swift/recon
+object_recon = true
+
+[object-replicator]
+
+[object-reconstructor]
+
+[object-updater]
+
+[object-auditor]
+
+[object-expirer]

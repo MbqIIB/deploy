@@ -1,0 +1,11 @@
+---
+
+- include: redhat_ntp.yml
+
+- include: redhat_openstack_repository.yml
+
+- name: disable iptables
+  shell: systemctl disable firewalld
+
+- name: stop iptables
+  service: name=firewalld state=stopped

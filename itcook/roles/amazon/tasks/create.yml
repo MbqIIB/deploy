@@ -1,0 +1,49 @@
+---
+
+- name: creating of new security group for django project
+  sudo: no
+  ec2_group:
+    name: web
+    description: web
+    region: "{{ site_region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        from_port: all
+        to_port: all
+        cidr_ip: 0.0.0.0/0
+
+- name: creating new keys pair for connection to web server
+  sudo: no
+  ec2_key:
+    region: "{{ site_region }}"
+    name: "{{ site_name }}"
+    key_material: "{{ site_ssh_public_key }}"
+    state: present
+
+- name: Create new web server for django project
+  sudo: no
+  ec2:
+     key_name : "{{ site_name }}"
+     instance_type : "{{ site_tier }}"
+     group: "web"
+     image: "{{ site_os_image }}"
+     region: "{{ site_region }}"
+     wait: "true"
+     exact_count: 1
+     count_tag:
+              Name: "{{ site_name }}"
+     instance_tags:
+                  Name: "{{ site_name }}"
+
+
+
+#- wait_for: ec2 = "{ region = "{{ site_region }}" instance_tags = { Name = "{{ site_amazon_tags }}" state = running }}"

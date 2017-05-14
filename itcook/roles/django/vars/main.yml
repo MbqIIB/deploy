@@ -1,0 +1,7 @@
+---
+# vars file for django
+
+pkgs:
+  - python-virtualenv
+  - python-pip
+  - python-dev

@@ -1,0 +1,8 @@
+---
+
+- name: creating new keys pair for connection to web server
+  ec2_key:
+    region: "us-west-2"
+    name: "{{ site_name }}"
+    key_material: "{{ site_ssh_public_key }}"
+    state: present

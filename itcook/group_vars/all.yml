@@ -1,0 +1,55 @@
+---
+
+#in case the node no need more then the variable must be set to ture after that will be envolved playbooks for deleting instance
+site_remove: false
+
+#ansible global config variables
+ansible_ssh_user: ubuntu
+
+#The source code of web site will be copied to checkout directory and will be deployed on amazon cloud node
+site_repo: git@github.com:mhrom/itcook.git
+
+site_name: itcook
+site_hostname: itcook
+
+#public key that will be copied to remote site nodes in cloud
+site_ssh_public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuq9feFvKnOH2TsWMQkCO53aTsvX7B8tblsblWr1nfPxvxYKc1nvIb1LF2lq2VNnr4lPGKAz33Ywj2YOoU4e0u3A19xP0LzqwqPUNAIcJa4EuZiIMTTDDUei12NoaMQfvMIFJDlbum5FnvUTnkyA20rAd5rqBTqNdAM3/SHml0ljKQbG+YnV4hrRjqu/5He0y5hpu2KkjshMajOF/I1M0xODSbix7SnnYQ09dc3I9t33KFdg8jAE0laU9w/rwJde2Iy7et602iZz7uz6fT1W3hEg0k9TMeIaHJJsGw7VV+VW+8WKf80BRfvaRm9a4Av6WB+CbNDarS53oZqm6U2FNl arkhangl@arkhangl.local'
+
+#any possible tier but more bigger tier is cost more money
+site_tier: "t2.micro"
+
+#the value can be any possible ragion from amazon cloud
+site_region: "eu-central-1"
+
+#the image that will be used as base OS image system on host
+site_os_image: "ami-accff2b1"
+
+#The value can be mysql or postgres
+site_backend: mysql
+site_database_user: root
+site_database_password: TrustPoint85
+
+site_nginx_version:
+site_uwsgi_version:
+#adjuste to your current or needed timezone
+site_timezone_area: Europe
+site_timezone_city: Kiev
+
+#packages will be installed to node after booting
+redhat_pkg:
+  - vim
+  - mc
+
+debian_pkg:
+  - vim
+  - mc
+  - tcpdump
+  - nmap
+
+site_ssh_public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuq9feFvKnOH2TsWMQkCO53aTsvX7B8tblsblWr1nfPxvxYKc1nvIb1LF2lq2VNnr4lPGKAz33Ywj2YOoU4e0u3A19xP0LzqwqPUNAIcJa4EuZiIMTTDDUei12NoaMQfvMIFJDlbum5FnvUTnkyA20rAd5rqBTqNdAM3/SHml0ljKQbG+YnV4hrRjqu/5He0y5hpu2KkjshMajOF/I1M0xODSbix7SnnYQ09dc3I9t33KFdg8jAE0laU9w/rwJde2Iy7et602iZz7uz6fT1W3hEg0k9TMeIaHJJsGw7VV+VW+8WKf80BRfvaRm9a4Av6WB+CbNDarS53oZqm6U2FNl arkhangl@arkhangl.local'
+site_repo: git@github.com:mhrom/itcook.git
+site_name: itcook
+site_hostname: itcook
+
+site_ntp_server: "server 0.de.pool.ntp.org"
+site_node:  node

@@ -1,0 +1,33 @@
+---
+
+- name: Install packages need to deploy django projects
+  apt: name={{ item }} state=present
+  with_items: pkgs
+
+- name: get the code of django project from github
+  git: repo={{ site_repo }} dest=./checkout/
+  delegate_to: 127.0.0.1
+  sudo: no
+
+- name: create virtual env folder
+  command: virtualenv /www/{{ site_name }} -p python2.7 creates="/www/{{ site_name }}"
+
+- name: the virtualenv activate
+  shell: . /www/{{ site_name }}/bin/activate
+
+- name: copy requirements for django project into virtual env
+  synchronize: src=checkout/requirements.txt dest=/tmp/requirements.txt
+
+- name: install requirements into virtual enviroment
+  pip:
+    requirements=/tmp/requirements.txt
+    virtualenv=/www/{{ site_name }}
+
+- name: copy script for creating django root folder project
+  template:  src=create_project.sh.j2 dest=/tmp/create_project.sh owner=ubuntu group=ubuntu mode=774
+
+- name: launch bash script to create folder for project
+  shell: /tmp/create_project.sh && rm -rf /tmp/*.sh
+
+- name: copy source code of site into remote djanog project directory
+  synchronize: src=checkout/ dest=/www/{{ site_name }}/{{ site_name }}/

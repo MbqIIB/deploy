@@ -1,0 +1,21 @@
+---
+
+- name: delete by instance_id
+  local_action:
+    module: ec2
+    region: "{{ site_region }}"
+    state: 'absent'
+    instance_ids: "{{ ansible_ec2_instance_id }}"
+
+- name: removing of security group
+  ec2_group:
+    name: web
+    description: web
+    region: "{{ site_region }}"
+    state: absent
+
+- name: removing public key
+  ec2_key:
+    name: "{{ site_name }}"
+    region: "{{ site_region }}"
+    state: absent

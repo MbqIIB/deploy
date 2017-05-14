@@ -1,0 +1,11 @@
+---
+
+- name: terminate web instances
+- action: ec2_facts
+- name: delete by instance_id
+  local_action:
+    module: ec2
+    region: 'us-west-2'
+    state: 'absent'
+    instance_ids: "{{ ansible_ec2_instance_id }}"
+

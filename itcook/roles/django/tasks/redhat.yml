@@ -1,0 +1,29 @@
+---
+
+- name: Install packages need to deploy django projects
+  yum: name={{ item }}, state=present
+  with_items: pkgs
+  when: ansible_os_family == 'RedHat'
+
+- name: get the code of django project from github
+  git: repo={{ site_repo }} dest=./checkout/
+  delegate_to: 127.0.0.1
+
+- name: create virtual env folder
+  command: virtualenv /www/{{ site_name }} -p python2.7 creates="/www/{{ site_name }}"
+
+- name: the virtualenv activate
+  shell: source /www/{{ site_name}}/bin/activate
+
+- name: copy requirements for django project into virtual env
+  synchronize: src=checkout/requirements.txt dest=/tmp/requirements.txt
+
+- name: install requirements into virtual enviroment
+  pip:
+    requirements=/tmp/requirements.txt
+    virtualenv=/www/{{ site_name }}
+- name: create django root folder project
+  command: cd /www/{{ site_name }} && django-admin startproject {{ site_name }}
+
+- name: copy source code of site into remote djanog project directory
+  synchronize: src=checkout/ dest=/www/{{ site_name }}/{{ site_name }}/

@@ -1,0 +1,45 @@
+---
+
+- hosts: localhost
+  sudo: no
+  connection: local
+  tasks:
+    - name: set an ansible global variables
+      shell: export ANSIBLE_REMOTE_USER={{ ansible_ssh_user }}
+
+- hosts: localhost
+  sudo: no
+  connection: local
+  roles:
+  - amazon
+  tags: vm_deploy
+
+- hosts: all
+  roles:
+  - common
+  tags: common
+
+- hosts: all
+  roles:
+  - django
+  tags:
+  - site_deploy
+
+- hosts: all
+  roles:
+  - nginx
+  - uwsgi
+  tags:
+  - dispatcher
+
+- hosts: all
+  roles:
+  - { role: mysql, when: site_backend == 'mysql' }
+  tags:
+  - site_db_deploy
+
+- hosts: all
+  roles:
+  - { role: postgres, when: site_backend == 'postgres' }
+  tags:
+  - site_db_deploy

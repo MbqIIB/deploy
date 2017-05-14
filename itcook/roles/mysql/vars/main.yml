@@ -1,0 +1,11 @@
+---
+# vars file for mysql
+
+pkgs:
+  - mysql-server
+  - mysql-common
+  - mysql-source-5.5
+  - percona-xtrabackup
+  - phpmyadmin
+  - libmysqlclient-dev
+  - python-mysqldb

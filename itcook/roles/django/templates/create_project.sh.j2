@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ ! -d /www/{{ site_name }}/{{ site_name }} ]
+  then
+    cd /www/{{ site_name }}
+    . ./bin/activate
+    django-admin.py startproject {{ site_name }}
+fi

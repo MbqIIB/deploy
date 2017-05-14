@@ -1,0 +1,6 @@
+---
+
+- name: Install the nginx packages
+  yum: name={{ item }} state=present
+  with_items: pkgs
+  when: ansible_os_family == "RedHat"

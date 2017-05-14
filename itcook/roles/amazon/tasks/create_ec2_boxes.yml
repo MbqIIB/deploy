@@ -1,0 +1,15 @@
+---
+
+- name: Create new web server for django project
+  ec2:
+     key_name : "{{ site_name }}"
+     instance_type : "t1.micro"
+     group: "web"
+     image: "ami-6d6b475d"
+     region: "us-west-2"
+     wait: "true"
+     exact_count: 1
+     count_tag:
+              Name: "{{ site_name }}"
+     instance_tags:
+                  Name: "{{ site_name }}"

@@ -1,0 +1,7 @@
+---
+#tasks file for amazon
+
+- include: create.yml
+
+- include: remove.yml
+  when: site_remove

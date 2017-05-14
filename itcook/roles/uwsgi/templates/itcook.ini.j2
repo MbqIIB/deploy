@@ -1,0 +1,32 @@
+# mysite_uwsgi.ini file
+[uwsgi]
+#Add non privileged user to start uwsgi server 
+uid     = www-data
+gid     = www-data
+
+# Django-related settings
+# the base directory (full path)
+chdir           = /var/www/python
+
+# Django's wsgi file
+wsgi-file = /var/www/python/{{ site_name }}/{{ site_name }}/wsgi.py
+
+# the virtualenv (full path)
+home            = /var/www/python/{{ site_name }}
+pythonpath	= /usr/bin/python2.7
+
+# process-related settings
+master          = true
+
+# maximum number of worker processes
+processes       = 10
+
+# the socket (use the full path to be safe
+#socket          = /var/run/uwsgi/{{ site_name }}.sock
+#chmod-socket    = 777
+
+# clear environment on exit
+vacuum          = true
+
+#log events into var directory
+logto   = /var/log/uwsgi/{{ site_name }}.log

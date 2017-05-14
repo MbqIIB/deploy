@@ -1,0 +1,11 @@
+---
+
+- name: Install mysql package to remote server
+  yum: name={{ item }} state=present
+  with_items: pkgs
+
+- name: Copy template of basic configuration
+  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=644
+
+- name: Enable autostart of service and restart it
+  service: name=mysql state=running enabled=yes

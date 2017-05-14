@@ -1,0 +1,23 @@
+---
+
+- name: install ntp client on target server
+  apt: name=ntp state=present update_cache=yes
+  sudo: yes
+
+- name: set timezone to site_timezone_area/site_timezone_city
+  template: src=timezone.j2 dest=/etc/timezone owner=root group=root mode=0644
+  register: timezone
+  sudo: yes
+
+- name: setup timezone link
+  shell: ln -sf /usr/share/zoneinfo/{{ site_timezone_area}}/{{ site_timezone_city }} /etc/localtime
+  sudo: yes
+
+- name: stop ntpd to run ntpdate
+  service: name=ntp state=stopped
+
+- name: set time with ntpdate
+  command: "ntpdate -s {{ site_ntp_server }}"
+
+- name: start ntp
+  service: name=ntp state=running enabled=yes
